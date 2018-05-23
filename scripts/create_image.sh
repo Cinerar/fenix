@@ -776,9 +776,9 @@ build_linux() {
 
 	cd ${UBUNTU_WORKING_DIR}
 	if [ ! -d linux/.git ]; then
-		echo "Linux repository does not exist, clone linux repository('$LINUX_GIT_BRANCH') form Khadas GitHub..."
+		echo "Linux repository does not exist, clone linux repository('$LINUX_GIT_BRANCH') form Cinerar GitHub..."
 		## Clone linux from Khadas GitHub
-		git clone https://github.com/khadas/linux -b $LINUX_GIT_BRANCH
+		git clone https://github.com/Cinerar/linux -b $LINUX_GIT_BRANCH
 		[ $? != 0 ] && error_msg $CURRENT_FILE $LINENO "Failed to clone 'linux'" && return -1
 	fi
 

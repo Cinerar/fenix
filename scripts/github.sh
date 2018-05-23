@@ -85,7 +85,7 @@ update_github_repository() {
 	if [ ! -d linux/.git ]; then
 		echo "Linux repository does not exist, clone linux repository('$LINUX_GIT_BRANCH_3_14') form Khadas GitHub..."
 		## Clone linux from Khadas GitHub
-		git clone https://github.com/khadas/linux -b $LINUX_GIT_BRANCH_3_14
+		git clone https://github.com/Cinerar/linux -b $LINUX_GIT_BRANCH_3_14
 		[ $? != 0 ] && error_msg $CURRENT_FILE $LINENO "Failed to clone 'linux'" && return -1
 	fi
 
