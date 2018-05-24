@@ -23,7 +23,7 @@ LINUX=$6
 KHADAS_BOARD=$7
 
 PACKAGE_LIST_BASIC="ifupdown net-tools udev fbset vim sudo initramfs-tools bluez rfkill libbluetooth-dev mc \
-	iputils-ping parted u-boot-tools"
+	iputils-ping parted u-boot-tools watchdog"
 
 PACKAGE_LIST_ESSENTIAL="bc bridge-utils build-essential cpufrequtils device-tree-compiler \
 	figlet fbset fping iw fake-hwclock wpasupplicant psmisc ntp parted rsync sudo curl linux-base dialog crda \
@@ -50,7 +50,8 @@ PACKAGE_LIST_OFFICE="lxtask mirage galculator hexchat mpv \
 	libpam-gnome-keyring thunderbird system-config-printer-common numix-gtk-theme paprefs tango-icon-theme \
 	libreoffice-writer libreoffice-style-tango libreoffice-gtk fbi cups-pk-helper cups"
 
-PACKAGE_LIST_DOCKER="lxc aufs-tools cgroup-lite apparmor docker.io"
+PACKAGE_LIST_DOCKER="software-properties-common apparmor aufs-tools cgroupfs-mount apt-transport-https ca-certificates curl software-properties-common git git-man iptables \
+	 less libbsd0 libedit2 liberror-perl libltdl7 libnfnetlink0 libpopt0 libx11-6 libx11-data libxau6 libxcb1"
 
 if [ "$UBUNTU_MATE_ROOTFS_TYPE" != "mate-rootfs" ]; then
 	# Setup password for root user
@@ -125,8 +126,18 @@ apt-get -y clean
 apt-get -y autoclean
 
 # Install Docker
-#apt-get -y $APT_OPTIONS install $PACKAGE_LIST_DOCKER
-#usermod -aG docker khadas
+apt-get -y $APT_OPTIONS install $PACKAGE_LIST_DOCKER
+apt-get -y clean
+apt-get -y autoclean
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+add-apt-repository \
+   "deb [arch=arm64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt-get update
+apt-get -y $APT_OPTIONS install docker-ce=18.03.1~ce-0~ubuntu
+usermod -aG docker khadas
 
 apt-get -y clean
 apt-get -y autoclean
