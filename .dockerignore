@@ -1,0 +1,17 @@
+# Git repos
+linux
+u-boot
+rootfs
+utils
+
+# Downloads
+archives/debs/
+archives/ubuntu-base/
+
+# Images
+images
+
+build
+downloads
+boot
+archives/ubuntu-mate
