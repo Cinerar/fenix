@@ -3,7 +3,11 @@
 set -e -o pipefail
 
 ########################### Parameters ###################################
-
+###new
+LINUX_GIT_BRANCH_3_14="ubuntu"
+#LINUX_GIT_BRANCH_4_9="ubuntu-4.9"
+LINUX_GIT_BRANCH_4_9="khadas-vim-4.9.y"
+###old
 UBOOT_DEFCONFIG=
 LINUX_DTB=
 UBUNTU_ROOTFS=
@@ -13,7 +17,7 @@ LINUX_DIR=
 
 AML_UPDATE_TOOL_CONFIG=
 
-UBUNTU_SERVER_IMAGE_SIZE=1000 # MB
+UBUNTU_SERVER_IMAGE_SIZE=1200 # MB
 UBUNTU_MATE_IMAGE_SIZE=5000 # MB
 
 UBUNTU_TYPE=$1
@@ -576,10 +580,10 @@ prepare_git_branch() {
 
 	case "$LINUX" in
 		3.14)
-			LINUX_GIT_BRANCH="ubuntu"
+			LINUX_GIT_BRANCH=$LINUX_GIT_BRANCH_3_14
 			;;
 		4.9)
-			LINUX_GIT_BRANCH="ubuntu-4.9"
+			LINUX_GIT_BRANCH=$LINUX_GIT_BRANCH_4_9
 			;;
 	mainline)
 			LINUX_GIT_BRANCH="master"

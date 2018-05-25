@@ -5,7 +5,8 @@
 UBOOT_GIT_BRANCH_VIM="ubuntu"
 UBOOT_GIT_BRANCH_VIM2="ubuntu"
 LINUX_GIT_BRANCH_3_14="ubuntu"
-LINUX_GIT_BRANCH_4_9="ubuntu-4.9"
+#LINUX_GIT_BRANCH_4_9="ubuntu-4.9"
+LINUX_GIT_BRANCH_4_9="khadas-vim-4.9.y"
 
 BASE_DIR="$HOME"
 PROJECT_DIR="${BASE_DIR}/project"

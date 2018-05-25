@@ -26,6 +26,7 @@ RUN apt-get update &&\
     mkdir /opt/toolchains &&\
     tar -xjf gcc-linaro-aarch64-linux-gnu-4.9-2014.09_linux.tar.bz2 -C /opt/toolchains
 
+ENV PATH="/opt/toolchains/gcc-linaro-aarch64-linux-gnu-4.9-2014.09_linux/bin:${PATH}"
 WORKDIR /fenix
 
 #ADD . /fenix

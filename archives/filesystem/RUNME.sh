@@ -23,7 +23,7 @@ LINUX=$6
 KHADAS_BOARD=$7
 
 PACKAGE_LIST_BASIC="ifupdown net-tools udev fbset vim sudo initramfs-tools bluez rfkill libbluetooth-dev mc \
-	iputils-ping parted u-boot-tools watchdog"
+	iputils-ping parted u-boot-tools"
 
 PACKAGE_LIST_ESSENTIAL="bc bridge-utils build-essential cpufrequtils device-tree-compiler \
 	figlet fbset fping iw fake-hwclock wpasupplicant psmisc ntp parted rsync sudo curl linux-base dialog crda \
@@ -51,7 +51,7 @@ PACKAGE_LIST_OFFICE="lxtask mirage galculator hexchat mpv \
 	libreoffice-writer libreoffice-style-tango libreoffice-gtk fbi cups-pk-helper cups"
 
 PACKAGE_LIST_DOCKER="software-properties-common apparmor aufs-tools cgroupfs-mount apt-transport-https ca-certificates curl software-properties-common git git-man iptables \
-	 less libbsd0 libedit2 liberror-perl libltdl7 libnfnetlink0 libpopt0 libx11-6 libx11-data libxau6 libxcb1"
+	 less libbsd0 libedit2 liberror-perl libltdl7 libnfnetlink0 libpopt0 libx11-6 libx11-data libxau6 libxcb1 xvfb"
 
 if [ "$UBUNTU_MATE_ROOTFS_TYPE" != "mate-rootfs" ]; then
 	# Setup password for root user
@@ -141,6 +141,21 @@ usermod -aG docker khadas
 
 apt-get -y clean
 apt-get -y autoclean
+
+#watchdog
+apt-get -y -o Dpkg::Options::="--force-confold" $APT_OPTIONS install watchdog
+apt-get -y clean
+apt-get -y autoclean
+ln -s  /lib/systemd/system/watchdog.service /etc/systemd/system/multi-user.target.wants/watchdog.service
+systemctl enable watchdog.service
+systemctl start watchdog.service
+
+#Xvfb service
+chmod +x /etc/systemd/system/Xvfb.service
+systemctl enable Xvfb.service
+systemctl start Xvfb.service
+
+
 
 if [ "$UBUNTU_TYPE" == "mate" ] && [ "$UBUNTU_MATE_ROOTFS_TYPE" == "mate-rootfs" ]; then
 	# Fixup /media/khadas ACL attribute
@@ -257,6 +272,8 @@ fi
 if [ "$KHADAS_BOARD" == "VIM" ]; then
 	# Load mali module
 	echo mali >> /etc/modules
+	# Setup watchdog
+	echo gxbb_wdt >> /etc/modules
 fi
 
 if [ "$LINUX" == "mainline" ]; then
