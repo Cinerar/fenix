@@ -155,6 +155,9 @@ chmod +x /etc/systemd/system/Xvfb.service
 systemctl enable Xvfb.service
 systemctl start Xvfb.service
 
+apt-get -y -o Dpkg::Options::="--force-confold" $APT_OPTIONS install openssh-server
+apt-get -y clean
+apt-get -y autoclean
 
 
 if [ "$UBUNTU_TYPE" == "mate" ] && [ "$UBUNTU_MATE_ROOTFS_TYPE" == "mate-rootfs" ]; then
